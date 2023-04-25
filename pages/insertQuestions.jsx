@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
-import { Input, ChakraProvider, Button, Select } from "@chakra-ui/react";
+import { Input, ChakraProvider, Button, Select,TagInput } from "@chakra-ui/react";
 
 export default function Reservations() {
   const [category, setCategory] = useState("");

@@ -6,6 +6,7 @@ export default function Reservations() {
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
   const [resultsAnswer, setResultsAnswer] = useState("");
   const [categories, setCategories] = useState("");
+  const [error, setError] = useState("");
 
   const [selectedDifficulties, setSelectedDifficulties] = useState([]);
 
@@ -33,18 +34,8 @@ export default function Reservations() {
     setIsClickedB("");
     setIsClickedC("");
     setIsClickedD("");
-    let choice;
-    if (selectedDifficulties === "easy") {
-      choice = "&difficulty=easy";
-    } else if (selectedDifficulties === "medium") {
-      choice = "&difficulty=medium";
-    } else if (selectedDifficulties === "hard") {
-      choice = "&difficulty=hard";
-    } else {
-      choice = "";
-    }
-
-    const url = `https://the-trivia-api.com/api/questions?limit=1&categories=${selectedCategories.join(",")}${choice}`;
+ 
+    const url = `http://localhost:3000/api/v1/getQuestions`;
     setResultsAnswer("");
     setSelectedAnswer("");
     setResultado("");
@@ -62,8 +53,8 @@ export default function Reservations() {
       })
       .then((result) => {
         setAnswers({
-          questions: result.map((question) => ({
-            id: question.id,
+          questions: result.data.map((question) => ({
+            id: question._id,
             question: question.question,
             correctAnswer: question.correctAnswer,
             incorrectAnswers: question.incorrectAnswers,
@@ -101,7 +92,7 @@ export default function Reservations() {
             padding: "7px",
           }}
         >
-          Correct!
+          Correta!
         </span>
       );
       setTotalCorrectQuestions(totalCorrectQuestions + 1);
@@ -117,7 +108,7 @@ export default function Reservations() {
             padding: "7px",
           }}
         >
-          {questao}: Is The Wrong Choice!. The correct answer is:{" "}
+          {questao}: Questão Errada!. A Correta é:{" "}
           {answers.questions[0]?.correctAnswer}
         </span>
       );
@@ -155,11 +146,11 @@ export default function Reservations() {
         <br />
         <div>
           <button className={styles.button} onClick={apiCall}>
-            Start
+            Começar
           </button>
 
           <button onClick={toggleCategoryOptions} className={styles.button}>
-            Options
+            Opções
           </button>
 
           {showCategoryOptions && (
@@ -227,7 +218,7 @@ export default function Reservations() {
                 <div>
                   <h2>
                     <button className={styles.card_text} onClick={apiCall}>
-                      Next Question
+                      Próxima Questão
                     </button>
                   </h2>
                   <h2
@@ -238,11 +229,11 @@ export default function Reservations() {
                   </h2>
                   <h5 style={{ textAlign: "center" }}>
                     <span>
-                      Difficulty:
+                      Dificuldade:
                       <strong> {answers.questions[0]?.difficulty} </strong>
                     </span>{" "}
                     <span>
-                      Category:{" "}
+                      Categoria:{" "}
                       <strong> {answers.questions[0]?.category}</strong>
                     </span>
                     <br />
