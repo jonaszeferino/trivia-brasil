@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 
-import { ChakraProvider,Box, Table, Thead, Tbody, Tr, Th, Td, H1 } from "@chakra-ui/react";
+import { ChakraProvider,Box, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 
 
 
@@ -26,16 +26,18 @@ export default function Questions() {
     <div>Loading...</div>
   ) : (
     <Box>
-      <H1>Questões inseridas</H1>
+      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+      <h1>Todas questão aguardando aprovação</h1></div>
       <Table variant="striped" colorScheme="pink">
         <Thead>
           <Tr>
-            <Th>Question</Th>
-            <Th>Category</Th>
-            <Th>Correct Answer</Th>
-            <Th>Incorrect Answers</Th>
-            <Th>Difficulty</Th>
+            <Th>Questão</Th>
+            <Th>Categoria</Th>
+            <Th>Correta</Th>
+            <Th>Incorreta</Th>
+            <Th>Dificuldade</Th>
             <Th>Tags</Th>
+            <Th>Status</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -47,6 +49,7 @@ export default function Questions() {
               <Td>{question.incorrectAnswers.join(", ")}</Td>
               <Td>{question.difficulty}</Td>
               <Td>{question.tags.join(", ")}</Td>
+              <Td> {question.approved == 1 ? "Aprovado" : "Aguar Aprovação"}</Td>
             </Tr>
           ))}
         </Tbody>
