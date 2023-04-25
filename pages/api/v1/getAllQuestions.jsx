@@ -2,6 +2,9 @@ import client from "../../../mongoconnection";
 
 export default async function handler(req, res) {
   const collection = client.db("triviaBrasil").collection("questions");
+  const pipeline = [
+  { $match: { approved: 0 } }
+  ];
 
   switch (req.method) {
     case "POST":
@@ -9,7 +12,7 @@ export default async function handler(req, res) {
       break;
 
     case "GET":
-      const questions = await collection.find({}).toArray();
+      const questions = await collection.aggregate(pipeline).toArray();
       res.json({
         status: "OK",
         statusCode: 200,
