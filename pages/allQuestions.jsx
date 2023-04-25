@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 
-import { ChakraProvider,Box, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+import { ChakraProvider,Box, Table, Thead, Tbody, Tr, Th, Td, CircularProgress, Text } from "@chakra-ui/react";
 
 
 
@@ -22,9 +22,12 @@ export default function Questions() {
   return (
     <ChakraProvider>
       <div className={styles.container}>
-  {isLoading ? (
-    <div>Loading...</div>
-  ) : (
+      {isLoading ? (
+  <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <CircularProgress isIndeterminate color="pink.500" />
+    <Text ml="4">Carregando...</Text>
+  </div>
+) : (
     <Box>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
       <h1>Todas questão aguardando aprovação</h1></div>
