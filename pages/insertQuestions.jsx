@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
-import { Input, ChakraProvider, Button, Select,TagInput } from "@chakra-ui/react";
+import { Input, ChakraProvider, Button, Select,TagInput, Spinner  } from "@chakra-ui/react";
 
 export default function Reservations() {
   const [category, setCategory] = useState("");
@@ -12,10 +12,15 @@ export default function Reservations() {
   const [errorIncorrect, setErrorIncorrect] = useState(false);
   const [errorTags, setErrorTags] = useState(false);
   const [status, setStatus] = useState("");
+  const [disableSend,setDisableSend] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   let url = "http://localhost:3000/api/v1/postInsertQuestions";
+  
 
   const apiCall = () => {
+    setLoading(true);
+    setDisableSend(true);
     setStatus("")
     const data = {
       category: category,
@@ -48,8 +53,14 @@ export default function Reservations() {
       .then((result) => {
         console.log(result);
         setStatus(result.status);
+        setDisableSend(true);
+        setLoading(false);
       })
-      .catch((error) => setErrorIncorrect(false));
+      .catch((error) => {
+        setErrorIncorrect(true);
+        setDisableSend(true);
+        setLoading(false);
+      });
   };
 
   const handleChangeCategory = (event) => {
@@ -87,6 +98,7 @@ export default function Reservations() {
   };
 
   const Clean = () => {
+    setDisableSend(false);
     setStatus("");
     setDifficulty("");
     setCategory(""),
@@ -110,7 +122,7 @@ export default function Reservations() {
     <div>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         <ChakraProvider>
-        <Button onClick={apiCall} className={styles.button}>
+        <Button onClick={apiCall} className={styles.button} disabled={disableSend}>
             Enviar
           </Button>
           <Button onClick={Clean} className={styles.button}>
@@ -180,7 +192,7 @@ export default function Reservations() {
             <option value="medio">Médio</option>
             <option value="dificil">Difícil</option>
           </Select>
-          {status}
+          {status}{loading ? <Spinner /> :"" }
         </ChakraProvider>
       </div>
     </div>

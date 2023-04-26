@@ -35,7 +35,8 @@ export default function Reservations() {
     setIsClickedC("");
     setIsClickedD("");
  
-    const url = `http://localhost:3000/api/v1/getQuestions`;
+    //const url = `http://localhost:3000/api/v1/getQuestions`;
+    const url = `https://trivia-brasil.vercel.app/api/v1/getQuestions`
     setResultsAnswer("");
     setSelectedAnswer("");
     setResultado("");
@@ -333,8 +334,8 @@ export default function Reservations() {
                     <h5 style={{ textAlign: "center" }}>
                   <span>{resultsAnswer}</span><br/><br/>
                     <span>
-                      Total: {totalQuestions} Corrects: {totalCorrectQuestions}{" "}
-                      Wrong: {totalWrongQuestions}
+                      Total: {totalQuestions} Corretas: {totalCorrectQuestions}{" "}
+                      Erradas: {totalWrongQuestions}
                     </span>
                   </h5>
                   <br />
